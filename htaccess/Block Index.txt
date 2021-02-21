@@ -1,2 +1,0 @@
-#---Bloqueamos el listado del contenido de los directorios
-Options -Indexes
