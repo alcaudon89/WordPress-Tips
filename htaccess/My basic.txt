@@ -14,7 +14,7 @@ Satisfy all
 </Files>
 #---Bloqueamos acceso al xmlrpc, salvo para conexiones locales
 <files xmlrpc.php>
-#allow from 217.61.129.129
+#allow from XX.XX.XX.XX
 deny from all
 </files>
 #---Bloqueamos archivos sensibles
