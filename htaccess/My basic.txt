@@ -1,0 +1,68 @@
+#-Configuración DavidRD.es
+#--Seguridad
+#---Redirección, todo el tráfico pasa por SSL
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,QSA,L]
+#---Bloqueamos el listado del contenido de los directorios
+Options -Indexes
+#---Desactivar HTTP TRACE / TRACK
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)
+RewriteRule .* - [F]
+#---Protegemos nuestros HTACCESS
+<Files ~ “^.*\.([Hh][Tt][Aa])”>
+Order allow,deny
+Deny from all
+Satisfy all
+</Files>
+#---Bloqueamos acceso al xmlrpc, salvo para conexiones locales
+<files xmlrpc.php>
+#allow from 217.61.129.129
+deny from all
+</files>
+#---Bloqueamos archivos sensibles
+<files wp-config.php>
+ deny from all
+</files>
+<files wp-config-sample.php>
+ deny from all
+</files>
+<files license.txt>
+ deny from all
+</files>
+<files licencia.txt>
+ deny from all
+</files>
+<files changelog.txt>
+ deny from all
+</files>
+<files readme.html>
+ deny from all
+</files>
+<files readme.txt>
+ deny from all
+</files>
+#---Bloqueamos el acceso al setup de instalación (puesto que ya hemos instalado WordPress)
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^wp-admin/install.php - [F,NS,L]
+RewriteRule ^wp-admin/setup-config.php - [F,NS,L]
+</IfModule>
+#---Bloqueamos la ejecución de archivos PHP a usuarios externos en carpetas donde no tienen por qué entrar
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^wp-includes/[^/]+\.php$  - [F,NS,L]
+RewriteRule ^wp-content/[^/]+\.php$  - [F,NS,L]
+</IfModule>
+#---bloqueos
+<IfModule mod_headers.c>
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+<IfModule mod_headers.c>
+  Header always append X-Frame-Options SAMEORIGIN
+</IfModule>
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options nosniff
+</IfModule>
+# END LD
