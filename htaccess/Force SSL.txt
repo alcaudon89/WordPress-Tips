@@ -1,0 +1,3 @@
+#---Redirección, todo el tráfico pasa por SSL
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,QSA,L]
