@@ -1,5 +1,3 @@
-#-Configuración DavidRD.es
-#--Seguridad
 #---Redirección, todo el tráfico pasa por SSL
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,QSA,L]
@@ -65,4 +63,3 @@ RewriteRule ^wp-content/[^/]+\.php$  - [F,NS,L]
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options nosniff
 </IfModule>
-# END LD
